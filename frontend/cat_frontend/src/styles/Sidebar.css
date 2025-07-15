@@ -1,0 +1,71 @@
+.sidebar {
+  width: 100px;
+  background-color: #000;
+  color: #FFCD00;
+  padding: 2rem 1rem;
+  height: 100vh;
+  position: relative;
+  transition: width 0.3s ease;
+  overflow: hidden;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.5);
+}
+
+.sidebar.collapsed {
+  width: 20px;
+}
+
+.sidebar li.toggle-button {
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.sidebar li.toggle-button i {
+  background-color: #FFCD00;
+  color: black;
+  padding: 0.5rem;
+  border-radius: 50%;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.sidebar li.toggle-button i:hover {
+  transform: scale(1.1);
+}
+
+.sidebar.collapsed .link-text {
+  display: none;
+}
+
+.sidebar.collapsed li.toggle-button i {
+  transform: rotate(180deg); /* flip the chevron */
+}
+
+
+.sidebar-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 3rem;
+  letter-spacing: 0.5px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 1.5rem 0;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.sidebar li:hover {
+  color: white;
+}
