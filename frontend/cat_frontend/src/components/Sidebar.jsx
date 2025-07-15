@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import {
   FaUpload,
   FaFolderOpen,
@@ -11,6 +12,14 @@ import '../styles/Sidebar.css'
 
 export default function Sidebar() {
   const [collapsed, setCollapsed] = useState(false)
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    // Clear session info if stored (e.g., localStorage)
+    localStorage.clear()
+    // Navigate to logout page (or login page)
+    navigate('/logout') // or navigate('/')
+  }
 
   return (
     <div className={`sidebar ${collapsed ? 'collapsed' : ''}`}>
@@ -18,15 +27,11 @@ export default function Sidebar() {
         {collapsed ? <FaChevronRight /> : <FaChevronLeft />}
       </div>
 
-      {/* {!collapsed && <h3 className="sidebar-title">Cathackathon</h3>} */}
       <ul>
-        <li class="toggle-button" onclick="toggleSidebar()">
-            {/* <i class="fas fa-chevron-left"></i>  */}
-        </li>
         <li><FaUpload /> {!collapsed && 'Upload Docs'}</li>
         <li><FaFolderOpen /> {!collapsed && 'My Files'}</li>
         <li><FaCog /> {!collapsed && 'Settings'}</li>
-        <li><FaSignOutAlt /> {!collapsed && 'Logout'}</li>
+        <li onClick={handleLogout}><FaSignOutAlt /> {!collapsed && 'Logout'}</li>
       </ul>
     </div>
   )

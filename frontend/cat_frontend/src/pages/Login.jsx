@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; //
 import { registerUser, loginUser } from '../services/authService';
 import '../styles/AuthForm.css';
 
@@ -8,8 +9,10 @@ export default function AuthForm() {
     username: '',
     email: '',
     password: '',
-    role: 'user'  // default role for signup
+    role: 'user'
   });
+
+  const navigate = useNavigate(); 
 
   const toggleForm = () => setIsLogin(prev => !prev);
 
@@ -27,8 +30,7 @@ export default function AuthForm() {
         };
         const res = await loginUser(loginPayload);
         alert('Login success!');
-        console.log(res); // you can save res.user_id in localStorage if needed
-        // navigate("/dashboard"); // Optional redirect
+        navigate('/dashboard');
       } else {
         const signupPayload = {
           username: form.username,
@@ -51,7 +53,6 @@ export default function AuthForm() {
       <div className={`auth-container ${isLogin ? 'login' : 'signup'}`}>
         <h2>{isLogin ? 'Login' : 'Sign Up'}</h2>
         <form onSubmit={handleSubmit} className="auth-form">
-          
           {!isLogin && (
             <input
               type="text"
@@ -62,7 +63,6 @@ export default function AuthForm() {
               required
             />
           )}
-
           <input
             type="email"
             name="email"
@@ -71,7 +71,6 @@ export default function AuthForm() {
             onChange={handleChange}
             required
           />
-
           <input
             type="password"
             name="password"
@@ -80,14 +79,12 @@ export default function AuthForm() {
             onChange={handleChange}
             required
           />
-
           {!isLogin && (
             <select name="role" value={form.role} onChange={handleChange} required>
               <option value="user">User</option>
               <option value="admin">Admin</option>
             </select>
           )}
-
           <button type="submit">{isLogin ? 'Login' : 'Sign Up'}</button>
         </form>
 
