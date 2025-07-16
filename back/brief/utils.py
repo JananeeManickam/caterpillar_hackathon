@@ -26,6 +26,8 @@ def generate_brief_from_file(file_path):
 
     if ext == '.pdf':
         return "This is a PDF document. Contents: (simulated brief summary)."
+    elif ext in '.pptx':
+        return "This is a powerpoint presentation. Contents: (simulated brief summary)."
     elif ext in ['.docx', '.doc']:
         return "This is a Word document. Contents: (simulated brief summary)."
     elif ext == '.xlsx':

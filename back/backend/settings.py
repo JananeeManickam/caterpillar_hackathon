@@ -86,7 +86,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'caterpillar',
         'USER': 'root',
-        'PASSWORD': 'Janu&mysql1603',
+        'PASSWORD': 'aldina123',
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }
@@ -113,10 +113,9 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ]
+    'DEFAULT_AUTHENTICATION_CLASSES': [],
 }
+
 
 
 # Internationalization

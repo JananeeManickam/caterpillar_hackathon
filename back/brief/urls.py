@@ -1,11 +1,11 @@
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from .views import BriefViewSet
-
-router = DefaultRouter()
-router.register(r'briefs', BriefViewSet, basename='brief')
+from django.urls import path
+from .views import FileUploadView, FileDetailView
 
 urlpatterns = [
-    path('', include(router.urls)),
+    # Upload files and get all files
+    path('files/', FileUploadView.as_view(), name='file-upload'),
     
+    # Get, delete specific file
+    path('files/<int:file_id>/', FileDetailView.as_view(), name='file-detail'),
 ]
+
