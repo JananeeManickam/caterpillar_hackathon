@@ -1,53 +1,60 @@
-import { useState } from 'react'
-import { uploadFile } from '../services/fileService'
-import '../styles/UploadForm.css'
+import { useState } from 'react';
+import '../styles/UploadForm.css';
+import { FaTimes } from 'react-icons/fa';
 
 export default function UploadForm() {
-  const [file, setFile] = useState(null)
-  const [progress, setProgress] = useState(0)
+  const [files, setFiles] = useState([]);
+  const [progress, setProgress] = useState(0);
 
   const handleChange = (e) => {
-    setFile(e.target.files[0])
-    setProgress(0) // reset progress on new file
-  }
+    const selectedFiles = Array.from(e.target.files);
+    setFiles(prev => [...prev, ...selectedFiles]);
+    setProgress(0);
+  };
+
+  const handleRemove = (indexToRemove) => {
+    const updatedFiles = files.filter((_, idx) => idx !== indexToRemove);
+    setFiles(updatedFiles);
+  };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  try {
-    if (isLogin) {
-        const res = await loginUser({
-            email: form.email,
-            password: form.password,
-        });
-        console.log('Login success', res);
-        navigate('/dashboard');
-        } else {
-        const res = await registerUser({
-            username: form.username,
-            email: form.email,
-            password: form.password,
-            role: 'user' // or any default
-        });
-        alert('Signup successful! Please login.');
-        setIsLogin(true);
-        }
-    } catch (err) {
-        alert('Error: ' + err.message);
-    }
-    }
+    e.preventDefault();
+    if (files.length === 0) return alert('Please select at least one file');
 
+    setProgress(0);
+    const interval = setInterval(() => {
+      setProgress(prev => {
+        if (prev >= 100) {
+          clearInterval(interval);
+          alert('Files ready to be uploaded to backend!');
+          return 100;
+        }
+        return prev + 10;
+      });
+    }, 100);
+  };
 
   return (
     <>
       <form className="upload-form" onSubmit={handleSubmit}>
         <label className="upload-button">
-          <input type="file" onChange={handleChange} />
-          Choose File
+          <input type="file" multiple hidden onChange={handleChange} />
+          Choose Files
         </label>
-        <button type="submit" className="upload-button">Upload</button>
+        <button type="submit" className="upload-button" disabled={files.length === 0}>
+          Upload All
+        </button>
       </form>
 
-      {/* Progress Bar */}
+      <div className="file-preview-list">
+        {files.map((file, index) => (
+          <div className="file-preview-card" key={index}>
+            <FaTimes className="remove-icon" onClick={() => handleRemove(index)} />
+            <p>{file.name}</p>
+          </div>
+        ))}
+      </div>
+
       {progress > 0 && (
         <div className="progress-container">
           <div className="progress-bar" style={{ width: `${progress}%` }}>
@@ -56,5 +63,5 @@ export default function UploadForm() {
         </div>
       )}
     </>
-  )
+  );
 }

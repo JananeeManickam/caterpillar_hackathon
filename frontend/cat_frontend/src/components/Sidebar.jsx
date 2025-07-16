@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   FaUpload,
   FaFolderOpen,
@@ -7,19 +7,17 @@ import {
   FaSignOutAlt,
   FaChevronLeft,
   FaChevronRight
-} from 'react-icons/fa'
-import '../styles/Sidebar.css'
+} from 'react-icons/fa';
+import '../styles/Sidebar.css';
 
 export default function Sidebar() {
-  const [collapsed, setCollapsed] = useState(false)
-  const navigate = useNavigate()
+  const [collapsed, setCollapsed] = useState(false);
+  const navigate = useNavigate();
 
   const handleLogout = () => {
-    // Clear session info if stored (e.g., localStorage)
-    localStorage.clear()
-    // Navigate to logout page (or login page)
-    navigate('/logout') // or navigate('/')
-  }
+    localStorage.clear();
+    navigate('/logout'); // or navigate('/')
+  };
 
   return (
     <div className={`sidebar ${collapsed ? 'collapsed' : ''}`}>
@@ -27,12 +25,15 @@ export default function Sidebar() {
         {collapsed ? <FaChevronRight /> : <FaChevronLeft />}
       </div>
 
-      <ul>
+      <ul className="nav-links">
         <li><FaUpload /> {!collapsed && 'Upload Docs'}</li>
         <li><FaFolderOpen /> {!collapsed && 'My Files'}</li>
         <li><FaCog /> {!collapsed && 'Settings'}</li>
+      </ul>
+
+      <ul className="logout-link">
         <li onClick={handleLogout}><FaSignOutAlt /> {!collapsed && 'Logout'}</li>
       </ul>
     </div>
-  )
+  );
 }

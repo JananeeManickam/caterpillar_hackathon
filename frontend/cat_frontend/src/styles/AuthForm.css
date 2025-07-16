@@ -19,7 +19,7 @@
 }
 
 .auth-container.signup {
-  transform: translateY(20px);
+  transform: translateY(0px);
   border-top: 5px solid #5C5C5C;
 }
 
@@ -32,22 +32,35 @@
 }
 
 .auth-form input {
-  display: block;
-  width: 90%;
-  margin: 12px auto;
-  padding: 12px;
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
   border: 1px solid #ccc;
   border-radius: 8px;
   font-size: 1rem;
-  transition: all 0.2s ease-in-out;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: border 0.2s ease;
+}
+.auth-form select{
+  width: 107%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: border 0.2s ease;
 }
 
-.auth-form input:focus {
-  border-color: #FFCD00;
+
+.auth-form input:focus,
+.auth-form select:focus {
+  border-color: #FFCD00; /* Caterpillar yellow */
   outline: none;
-  box-shadow: 0 0 8px #FFCD00;
-  transition: all 0.3s ease-in-out;
 }
+
 
 .auth-form button {
   width: 95%;
