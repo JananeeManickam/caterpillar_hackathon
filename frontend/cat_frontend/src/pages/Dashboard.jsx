@@ -1,6 +1,6 @@
 import UploadForm from '../components/UploadForm'
 import '../styles/Dashboard.css'
-import Sidebar from '../components/sidebar'
+import Sidebar from '../components/Sidebar'
 
 export default function Dashboard() {
   return (

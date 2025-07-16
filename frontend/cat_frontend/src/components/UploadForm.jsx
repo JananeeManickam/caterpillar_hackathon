@@ -5,6 +5,7 @@ import { FaTimes } from 'react-icons/fa';
 export default function UploadForm() {
   const [files, setFiles] = useState([]);
   const [progress, setProgress] = useState(0);
+  const [uploading, setUploading] = useState(false);
 
   const handleChange = (e) => {
     const selectedFiles = Array.from(e.target.files);
@@ -13,25 +14,51 @@ export default function UploadForm() {
   };
 
   const handleRemove = (indexToRemove) => {
-    const updatedFiles = files.filter((_, idx) => idx !== indexToRemove);
-    setFiles(updatedFiles);
+    setFiles(prev => prev.filter((_, idx) => idx !== indexToRemove));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (files.length === 0) return alert('Please select at least one file');
 
-    setProgress(0);
-    const interval = setInterval(() => {
-      setProgress(prev => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          alert('Files ready to be uploaded to backend!');
-          return 100;
+    const formData = new FormData();
+    files.forEach(file => formData.append('files', file));
+
+    try {
+      setUploading(true);
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', 'http://localhost:8000/api/files/');
+
+      xhr.upload.onprogress = (event) => {
+        if (event.lengthComputable) {
+          const percent = Math.round((event.loaded / event.total) * 100);
+          setProgress(percent);
         }
-        return prev + 10;
-      });
-    }, 100);
+      };
+
+      xhr.onload = () => {
+        setUploading(false);
+        if (xhr.status === 201) {
+          alert('Files uploaded successfully!');
+          setFiles([]);
+          setProgress(0);
+        } else {
+          alert('Upload failed!');
+          console.error(xhr.responseText);
+        }
+      };
+
+      xhr.onerror = () => {
+        setUploading(false);
+        alert('Upload failed. Please check your connection or server.');
+      };
+
+      xhr.send(formData);
+    } catch (err) {
+      console.error('Upload error:', err);
+      alert('Unexpected error occurred!');
+      setUploading(false);
+    }
   };
 
   return (
@@ -41,8 +68,8 @@ export default function UploadForm() {
           <input type="file" multiple hidden onChange={handleChange} />
           Choose Files
         </label>
-        <button type="submit" className="upload-button" disabled={files.length === 0}>
-          Upload All
+        <button type="submit" className="upload-button" disabled={files.length === 0 || uploading}>
+          {uploading ? 'Uploading...' : 'Upload All'}
         </button>
       </form>
 
@@ -55,7 +82,7 @@ export default function UploadForm() {
         ))}
       </div>
 
-      {progress > 0 && (
+      {progress > 0 && uploading && (
         <div className="progress-container">
           <div className="progress-bar" style={{ width: `${progress}%` }}>
             {progress}%

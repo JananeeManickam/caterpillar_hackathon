@@ -4,6 +4,7 @@
   background-color: #1f1f1f;
   color: #fff;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow: hidden;
 }
 
 .dashboard-content {

@@ -78,6 +78,22 @@ class FileDetailView(APIView):
             'full_content': file.content,
             'uploaded_at': file.uploaded_at
         }, status=status.HTTP_200_OK)
+    
+    def put(self, request, file_id):
+        """Update file content"""
+        try:
+            file = UploadedFile.objects.get(id=file_id)
+        except UploadedFile.DoesNotExist:
+            return Response({'error': 'File not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        new_content = request.data.get('content')
+        if new_content is None:
+            return Response({'error': 'No content provided'}, status=status.HTTP_400_BAD_REQUEST)
+
+        file.content = new_content
+        file.save()
+
+        return Response({'message': 'File updated successfully'}, status=status.HTTP_200_OK)
 
     def delete(self, request, file_id):
         """Delete a specific file"""

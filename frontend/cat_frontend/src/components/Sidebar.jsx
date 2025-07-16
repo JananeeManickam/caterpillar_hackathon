@@ -27,7 +27,7 @@ export default function Sidebar() {
 
       <ul className="nav-links">
         <li onClick={() => navigate('/dashboard')}><FaUpload /> {!collapsed && 'Upload Docs'}</li>
-        <li onClick={() => navigate('/my-files')}><FaFolderOpen /> {!collapsed && 'My Files'}</li>
+        <li onClick={() => navigate('/my_files')}><FaFolderOpen /> {!collapsed && 'My Files'}</li>
         <li onClick={() => navigate('/settings')}><FaCog /> {!collapsed && 'Settings'}</li>
       </ul>
 
