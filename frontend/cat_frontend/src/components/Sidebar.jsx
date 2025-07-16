@@ -16,7 +16,7 @@ export default function Sidebar() {
 
   const handleLogout = () => {
     localStorage.clear();
-    navigate('/logout'); // or navigate('/')
+    navigate('/logout');
   };
 
   return (
@@ -26,9 +26,9 @@ export default function Sidebar() {
       </div>
 
       <ul className="nav-links">
-        <li><FaUpload /> {!collapsed && 'Upload Docs'}</li>
-        <li><FaFolderOpen /> {!collapsed && 'My Files'}</li>
-        <li><FaCog /> {!collapsed && 'Settings'}</li>
+        <li onClick={() => navigate('/dashboard')}><FaUpload /> {!collapsed && 'Upload Docs'}</li>
+        <li onClick={() => navigate('/my-files')}><FaFolderOpen /> {!collapsed && 'My Files'}</li>
+        <li onClick={() => navigate('/settings')}><FaCog /> {!collapsed && 'Settings'}</li>
       </ul>
 
       <ul className="logout-link">
