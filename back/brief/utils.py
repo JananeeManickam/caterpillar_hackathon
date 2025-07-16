@@ -1,16 +1,36 @@
-import os
+# brief/utils.py
 
-def analyze_file(file_path):
+import os
+# utils.py
+from PyPDF2 import PdfReader, PdfWriter
+import io
+
+def edit_pdf(file, text_to_add="Modified"):
+    reader = PdfReader(file)
+    writer = PdfWriter()
+
+    for page in reader.pages:
+        writer.add_page(page)
+
+    # Add metadata or annotation (or replace content logic)
+    writer.add_metadata({"/ModifiedBy": text_to_add})
+
+    buffer = io.BytesIO()
+    writer.write(buffer)
+    buffer.seek(0)
+    return buffer
+
+
+def generate_brief_from_file(file_path):
     ext = os.path.splitext(file_path)[1].lower()
-    if ext in ['.txt']:
-        with open(file_path, 'r', encoding='utf-8') as f:
-            content = f.read()
-            return f"AI Summary (text): {content[:200]}..."  # Example for .txt
-    elif ext in ['.pdf']:
-        return "AI Summary: This is a PDF file."
-    elif ext in ['.csv']:
-        return "AI Summary: CSV with tabular data."
-    elif ext in ['.jpg', '.png']:
-        return "AI Summary: This is an image file."
+
+    if ext == '.pdf':
+        return "This is a PDF document. Contents: (simulated brief summary)."
+    elif ext in ['.docx', '.doc']:
+        return "This is a Word document. Contents: (simulated brief summary)."
+    elif ext == '.xlsx':
+        return "This is an Excel file. Contents: (simulated brief summary)."
+    elif ext == '.csv':
+        return "This is a CSV file. Contents: (simulated brief summary)."
     else:
-        return f"AI Summary: Cannot parse .{ext[1:]} files yet, but file is received."
+        return "Unsupported file format for summarization."
